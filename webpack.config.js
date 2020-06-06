@@ -1,0 +1,48 @@
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const outputPath = 'lib';
+
+module.exports = {
+    // Change to your "entry-point".
+    entry: {
+        libtiff: __dirname + '/src/index.ts',
+        'libtiff-worker': __dirname + '/src/worker.ts'
+    },
+    output: {
+        path: path.join(__dirname, outputPath),
+        filename: '[name].js',
+        library: 'libtiff.js',
+        libraryTarget: 'umd',
+        umdNamedDefine: true
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json']
+    },
+    module: {
+        rules: [{
+            // Include ts, tsx, js, and jsx files.
+            test: /\.(ts|js)x?$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+        },
+        {
+            test: /\.wasm$/,
+            type: 'javascript/auto',
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              publicPath: 'lib/',
+            },
+        }],        
+    },
+    node: {
+        fs: 'empty'
+    },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                { from: path.join('./src', 'tiff.raw.wasm'), to: path.join(__dirname, outputPath) }  
+            ]
+        })        
+      ],
+};
