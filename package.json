@@ -2,15 +2,20 @@
   "name": "libtiff.js",
   "version": "0.1.0",
   "license": "BSD",
+  "main": "lib/libtiff.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "npm run build:types && npm run build:js",
+    "build": "webpack -p",
+    "build:old": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
-    "bundle": "webpack",
-    "prepare": "webpack",
-    "prepublishOnly": "webpack"
+    "bundle": "npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
