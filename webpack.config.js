@@ -14,7 +14,8 @@ module.exports = {
         filename: '[name].js',
         library: 'libtiff.js',
         libraryTarget: 'umd',
-        umdNamedDefine: true
+        umdNamedDefine: true,
+        globalObject: 'this'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
