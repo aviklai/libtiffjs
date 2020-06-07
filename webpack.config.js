@@ -42,7 +42,8 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: path.join('./src', 'tiff.raw.wasm'), to: path.join(__dirname, outputPath) }  
+                { from: path.join('./src', 'tiff.raw.wasm'), to: path.join(__dirname, outputPath) },
+                { from: path.join('./src', 'tiff.raw.js'), to: path.join(__dirname, outputPath) }   
             ]
         })        
       ],
