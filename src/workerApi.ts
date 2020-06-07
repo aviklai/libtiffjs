@@ -17,7 +17,7 @@ function getPathPrefix() {
 function initWorker() {
     if (typeof workerPromise === 'undefined') {
         workerPromise = new Promise(function (resolve, reject) {
-            let _worker = new Worker('libtiff-worker.js');
+            let _worker = new Worker(getPathPrefix() + 'libtiff-worker.js');
 
             _worker.onmessage = function (msg) {
                 if (msg.data.ready) {

@@ -5,9 +5,10 @@ const outputPath = 'lib';
 module.exports = {
     // Change to your "entry-point".
     entry: {
-        libtiff: __dirname + '/src/index.ts',
+        index: __dirname + '/src/index.ts',
         'libtiff-worker': __dirname + '/src/worker.ts'
     },
+    devtool: 'source-map',
     output: {
         path: path.join(__dirname, outputPath),
         filename: '[name].js',
