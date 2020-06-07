@@ -2,8 +2,6 @@
 import { TiffTag } from "./tiffConsts";
 import { uuidv4 } from "./utils";
 
-const targetOrigin =  '*';
-
 let initialized = false;
 
 let registry: any = {};
@@ -60,14 +58,14 @@ self.Module.onRuntimeInitialized = () => {
     privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
     registry.readTiffFloat32 = readTiffFloat32; 
     initialized = true;
-    postMessage({ready: true}, targetOrigin);
+    postMessage({ready: true});
 };
 
 importScripts('tiff.raw.js');
 
 onmessage = function (msg) {
   if (!initialized) {
-      postMessage({success: false, message: 'Runtime not yet initialized'}, targetOrigin);
+      postMessage({success: false, message: 'Runtime not yet initialized'});
       return;
   }
   if (msg.data['function'] && registry[msg.data['function']]) {
@@ -82,13 +80,13 @@ onmessage = function (msg) {
               success: true,
               result: result,
               id: msg.data.id
-          }, targetOrigin);
+          });
       } catch (error) {
           postMessage({
               success: false,
               message: error.message,
               id: msg.data.id
-          }, targetOrigin);
+          });
       }
       return;
   }
@@ -96,5 +94,5 @@ onmessage = function (msg) {
       success: false,
       message: 'No "function" key specified or function not found',
       id: msg.data.id
-  }, targetOrigin);
+  });
 };
