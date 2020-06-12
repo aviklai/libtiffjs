@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { TiffTag } from "./tiffConsts";
 import { uuidv4 } from "./utils";
+importScripts('tiff.raw.js');
 
 let initialized = false;
-
 let registry: any = {};
 let privateRegistry: any = {};
 
@@ -13,7 +13,6 @@ function readTiffFloat32(data: ArrayBuffer) {
     var tiff = privateRegistry.TIFFOpen(fname, "r");
 
     if (privateRegistry.TIFFGetField(tiff, TiffTag.SAMPLESPERPIXEL) != 1) {
-        alert("Only single channel images are supported");
         return;
     }
 
@@ -32,7 +31,7 @@ function readTiffFloat32(data: ArrayBuffer) {
         if (read == -1) {
             alert("Error reading encoded strip from TIFF file");
         }
-        var stripData = new Float32Array(HEAPU8.buffer, sbuf, read / bytesPerSample);
+        var stripData = new Float32Array(HEAPF32.buffer, sbuf, read / bytesPerSample);
         tiffFloatArray.set(stripData, s * rowsPerStrip * width);
     }
     privateRegistry.TIFFFree(sbuf);    
@@ -41,27 +40,25 @@ function readTiffFloat32(data: ArrayBuffer) {
     return tiffFloatArray;
 }
 
-self.Module = {};
-
-self.Module.onRuntimeInitialized = () => {
-    privateRegistry.TIFFOpen = self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']);
-    privateRegistry.TIFFClose = self.Module.cwrap('TIFFClose', 'number', ['number']);
-    privateRegistry.TIFFNumberOfStrips = self.Module.cwrap('TIFFNumberOfStrips', 'number', ['number']);
-    privateRegistry.TIFFStripSize = self.Module.cwrap('TIFFStripSize', 'number', ['number']);
-    privateRegistry.TIFFReadEncodedStrip = self.Module.cwrap('TIFFReadEncodedStrip', 'number', ['number', 'number', 'number', 'number']);
-    privateRegistry.TIFFMalloc = self.Module.cwrap('_TIFFmalloc', 'number', ['number']);
-    privateRegistry.TIFFFree = self.Module.cwrap('_TIFFfree', 'number', ['number']);
-    privateRegistry.TIFFGetField = self.Module.cwrap('GetField', 'number', ['number', 'number']);
-    privateRegistry.TIFFLastDirectory = self.Module.cwrap('LastDirectory', 'number', ['number']);
-    privateRegistry.TIFFReadDirectory = self.Module.cwrap('ReadDirectory', 'number', ['number']);
-    privateRegistry.TIFFSetDirectory = self.Module.cwrap('SetDirectory', 'number', ['number', 'number']);
-    privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
-    registry.readTiffFloat32 = readTiffFloat32; 
-    initialized = true;
-    postMessage({ready: true});
+self.Module = {
+    onRuntimeInitialized: () => {
+        privateRegistry.TIFFOpen = self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']);
+        privateRegistry.TIFFClose = self.Module.cwrap('TIFFClose', 'number', ['number']);
+        privateRegistry.TIFFNumberOfStrips = self.Module.cwrap('TIFFNumberOfStrips', 'number', ['number']);
+        privateRegistry.TIFFStripSize = self.Module.cwrap('TIFFStripSize', 'number', ['number']);
+        privateRegistry.TIFFReadEncodedStrip = self.Module.cwrap('TIFFReadEncodedStrip', 'number', ['number', 'number', 'number', 'number']);
+        privateRegistry.TIFFMalloc = self.Module.cwrap('_TIFFmalloc', 'number', ['number']);
+        privateRegistry.TIFFFree = self.Module.cwrap('_TIFFfree', 'number', ['number']);
+        privateRegistry.TIFFGetField = self.Module.cwrap('GetField', 'number', ['number', 'number']);
+        privateRegistry.TIFFLastDirectory = self.Module.cwrap('LastDirectory', 'number', ['number']);
+        privateRegistry.TIFFReadDirectory = self.Module.cwrap('ReadDirectory', 'number', ['number']);
+        privateRegistry.TIFFSetDirectory = self.Module.cwrap('SetDirectory', 'number', ['number', 'number']);
+        privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
+        registry.readTiffFloat32 = readTiffFloat32; 
+        initialized = true;
+        postMessage({ready: true});
+    }
 };
-
-importScripts('tiff.raw.js');
 
 onmessage = function (msg) {
   if (!initialized) {

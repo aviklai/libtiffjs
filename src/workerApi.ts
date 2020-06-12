@@ -1,11 +1,10 @@
 import { uuidv4 } from "./utils";
 
 let messages: any = {};
-
 let workerPromise: any;
-
 let _scripts = document.getElementsByTagName('script');
 const THIS_SCRIPT = _scripts[_scripts.length - 1];
+
 
 function getPathPrefix() {
     return THIS_SCRIPT.src.substring(
@@ -47,7 +46,7 @@ function addMessageResolver(callback: any, errback: any) {
     return key;
 }
 
-function callWorker(name: string, args: any) {
+function callWorker(name: string, args: any, transferables: any[] = []) {
     return initWorker().then((worker: any) => {
         return new Promise(function (resolve, reject) {
             let resolverId = addMessageResolver(
@@ -63,7 +62,7 @@ function callWorker(name: string, args: any) {
                 id: resolverId,
                 function: name,
                 arguments: args
-            });
+            }, transferables);
         });
     });
 }
