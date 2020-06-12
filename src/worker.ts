@@ -40,7 +40,7 @@ function readTiffFloat32(data: ArrayBuffer) {
 }
 
 self.Module = {
-    onRuntimeInitialized: () => {
+    onRuntimeInitialized: function() {
         privateRegistry.TIFFOpen = self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']);
         privateRegistry.TIFFClose = self.Module.cwrap('TIFFClose', 'number', ['number']);
         privateRegistry.TIFFNumberOfStrips = self.Module.cwrap('TIFFNumberOfStrips', 'number', ['number']);
