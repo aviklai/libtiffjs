@@ -46,7 +46,7 @@ function addMessageResolver(callback: any, errback: any) {
     return key;
 }
 
-function callWorker(name: string, args: any, transferables: any[] = []) {
+function callWorker(name: string, args: any) {
     return initWorker().then((worker: any) => {
         return new Promise(function (resolve, reject) {
             let resolverId = addMessageResolver(
@@ -62,7 +62,7 @@ function callWorker(name: string, args: any, transferables: any[] = []) {
                 id: resolverId,
                 function: name,
                 arguments: args
-            }, transferables);
+            });
         });
     });
 }

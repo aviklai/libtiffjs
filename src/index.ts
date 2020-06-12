@@ -1,7 +1,7 @@
 import { initWorker, callWorker } from './workerApi';
 
 function readTiffFloat32(data: any) {
-    return callWorker('readTiffFloat32', [data], [data]).then(
+    return callWorker('readTiffFloat32', [data]).then(
         function (result: any) {
             return result;
         },
