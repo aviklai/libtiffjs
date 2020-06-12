@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { TiffTag } from "./tiffConsts";
 import { uuidv4 } from "./utils";
-importScripts('tiff.raw.js');
 
 let initialized = false;
 let registry: any = {};
@@ -59,6 +58,8 @@ self.Module = {
         postMessage({ready: true});
     }
 };
+
+importScripts('tiff.raw.js');
 
 onmessage = function (msg) {
   if (!initialized) {
