@@ -1,6 +1,6 @@
 const tinyFloatTifPath = '/base/test/assets/tiny-float.tif';
 
-function xhrAsPromiseBlob(url) {
+function xhrAsPromiseArrayBuffer(url) {
     let xhr = new XMLHttpRequest();
 
     xhr.open('GET', url);
@@ -24,7 +24,7 @@ describe('Given that libtiffjs exists', () => {
 
     describe('calling open with arraybuffer', function () {
         it('should return a float32array', () => {
-            return xhrAsPromiseBlob(tinyFloatTifPath)
+            return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
                 .then((tifBlob) => libtiffjs.readTiffFloat32(tifBlob))
                 .then((data) => expect(data).to.be.a('float32array'));
         });
