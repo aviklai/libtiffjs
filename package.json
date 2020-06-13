@@ -1,8 +1,8 @@
 {
-  "name": "libtiff.js",
+  "name": "libtiffjs",
   "version": "0.1.0",
   "license": "BSD",
-  "main": "lib/libtiff.js",
+  "main": "lib/index.js",
   "files": [
     "lib/"
   ],
@@ -15,7 +15,10 @@
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
     "bundle": "npm run build",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "karma start --single-run --browser ChromeHeadless karma.conf.js",
+    "test:watch": "karma start --auto-watch --browser ChromeHeadless karma.conf.js",
+    "test:ci": "webpack --env dev && webpack --env build && karma start --single-run --browser ChromeHeadless karma.conf.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -26,6 +29,15 @@
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.0.2",
     "exports-loader": "^0.7.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "karma": "^4.0.0",
+    "karma-babel-preprocessor": "^8.0.0",
+    "karma-chai": "^0.1.0",
+    "karma-chai-as-promised": "^0.1.2",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^1.3.0",
+    "mocha": "^6.0.0",
     "file-loader": "^6.0.0",
     "typescript": "^3.7.5",
     "webpack": "^4.43.0",

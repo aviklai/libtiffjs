@@ -12,7 +12,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, outputPath),
         filename: '[name].js',
-        library: 'libtiff.js',
+        library: 'libtiffjs',
         libraryTarget: 'umd',
         umdNamedDefine: true,
         globalObject: 'this'
