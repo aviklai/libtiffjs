@@ -1,9 +1,15 @@
 import { initWorker, callWorker } from './workerApi';
+import TiffInstace from './tiffInstance'
 
-function readTiffFloat32(data: any) {
-    return callWorker('readTiffFloat32', [data]).then(
+function open(data: any) {
+    return callWorker('open', [data]).then(
         function (result: any) {
-            return result;
+            return new TiffInstace(
+                result.tiffPtr,
+                result.filePath,
+                result.directory,
+                result.filename
+            );
         },
         function (error: any) { throw error; }
     );
@@ -13,4 +19,4 @@ function initialize() {
     return initWorker();
 }
 
-export { initialize, readTiffFloat32 };
+export { initialize, open };

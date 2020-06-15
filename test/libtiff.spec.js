@@ -20,12 +20,39 @@ describe('Given that libtiffjs exists', () => {
     before(function () {
         this.timeout(15000);
         return libtiffjs.initialize();
-    });    
+    });   
+
+    describe('Checking close', function () {
+        it('should close the file', () => {
+            return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
+                .then((tifBlob) => libtiffjs.open(tifBlob))
+                .then((tiffInstance) => tiffInstance.close())
+        });
+    });
+
+    describe('Checking width', function () {
+        it('should return a number', () => {
+            return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
+                .then((tifBlob) => libtiffjs.open(tifBlob))
+                .then((tiffInstance) => tiffInstance.width())
+                .then((width) => expect(width).to.be.a('number'));
+        });
+    });
+
+    describe('Checking height', function () {
+        it('should return a number', () => {
+            return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
+                .then((tifBlob) => libtiffjs.open(tifBlob))
+                .then((tiffInstance) => tiffInstance.height())
+                .then((height) => expect(height).to.be.a('number'));
+        });
+    });
 
     describe('calling open with arraybuffer', function () {
         it('should return a float32array', () => {
             return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
-                .then((tifBlob) => libtiffjs.readTiffFloat32(tifBlob))
+                .then((tifBlob) => libtiffjs.open(tifBlob))
+                .then((tiffInstance) => tiffInstance.readTiffFloat32())
                 .then((data) => expect(data).to.be.a('float32array'));
         });
     });

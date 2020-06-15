@@ -1,43 +1,13 @@
 // @ts-nocheck
 import { TiffTag } from "./tiffConsts";
 import { uuidv4 } from "./utils";
+import open from './wrappers/open';
+import readTiffFloat32 from './wrappers/readTiffFloat32';
+import privateRegistry from './privateRegistry';
 
 let initialized = false;
 let registry: any = {};
-let privateRegistry: any = {};
-
-function readTiffFloat32(data: ArrayBuffer) {
-    var fname = `${uuidv4()}.tiff`;
-    FS.createDataFile("/", fname, new Uint8Array(data), true, false);
-    var tiff = privateRegistry.TIFFOpen(fname, "r");
-
-    if (privateRegistry.TIFFGetField(tiff, TiffTag.SAMPLESPERPIXEL) != 1) {
-        return;
-    }
-
-    var width = privateRegistry.TIFFGetField(tiff, TiffTag.IMAGEWIDTH);
-    var height = privateRegistry.TIFFGetField(tiff, TiffTag.IMAGELENGTH);
-
-    var numStrips = privateRegistry.TIFFNumberOfStrips(tiff);
-    var rowsPerStrip = privateRegistry.TIFFGetField(tiff, TiffTag.ROWSPERSTRIP);
-
-    var bytesPerSample = privateRegistry.TIFFGetField(tiff, TiffTag.BITSPERSAMPLE) / 8;
-    var tiffFloatArray = new Float32Array(width * height);
-
-    var sbuf = privateRegistry.TIFFMalloc(privateRegistry.TIFFStripSize(tiff));
-    for (var s = 0; s < numStrips; ++s) {
-        var read = privateRegistry.TIFFReadEncodedStrip(tiff, s, sbuf, -1);
-        if (read == -1) {
-            alert("Error reading encoded strip from TIFF file");
-        }
-        var stripData = new Float32Array(HEAPF32.buffer, sbuf, read / bytesPerSample);
-        tiffFloatArray.set(stripData, s * rowsPerStrip * width);
-    }
-    privateRegistry.TIFFFree(sbuf);    
-    privateRegistry.TIFFClose(tiff);
-    FS.unlink("/" + fname);
-    return tiffFloatArray;
-}
+var openedFiles = [];
 
 self.Module = {
     onRuntimeInitialized: function() {
@@ -53,7 +23,17 @@ self.Module = {
         privateRegistry.TIFFReadDirectory = self.Module.cwrap('ReadDirectory', 'number', ['number']);
         privateRegistry.TIFFSetDirectory = self.Module.cwrap('SetDirectory', 'number', ['number', 'number']);
         privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
-        registry.readTiffFloat32 = readTiffFloat32; 
+        registry.open = open(
+            self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']),
+            openedFiles
+        );  
+        registry.close = (tiffPtr: number, filePath: string) => {
+            privateRegistry.TIFFClose(tiffPtr)
+            FS.unlink(filePath);
+        };              
+        registry.width = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGEWIDTH));
+        registry.height = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGELENGTH));
+        registry.readTiffFloat32 = readTiffFloat32();
         initialized = true;
         postMessage({ready: true});
     }
