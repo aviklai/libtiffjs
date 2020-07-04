@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/react-leaflet-google-layer.svg)](https://www.npmjs.com/package/libtiffjs)
+[![npm version](https://img.shields.io/npm/v/libtiffjs.svg)](https://www.npmjs.com/package/libtiffjs)
 
 # libtiffjs - Work in progress
 
