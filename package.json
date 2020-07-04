@@ -1,6 +1,6 @@
 {
   "name": "libtiffjs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "BSD",
   "main": "lib/index.js",
   "files": [
@@ -26,7 +26,11 @@
     "tif",
     "libtiffjs",
     "libtiff.js"
-  ],  
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aviklai/libtiffjs.git"
+  },  
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
