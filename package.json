@@ -20,6 +20,13 @@
     "test:watch": "karma start --auto-watch --browser ChromeHeadless karma.conf.js",
     "test:ci": "webpack --env dev && webpack --env build && karma start --single-run --browser ChromeHeadless karma.conf.js"
   },
+  "keywords": [
+    "libtiff",
+    "tiff",
+    "tif",
+    "libtiffjs",
+    "libtiff.js"
+  ],  
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
