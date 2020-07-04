@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/npm/v/react-leaflet-google-layer.svg)](https://www.npmjs.com/package/libtiffjs)
+
 # libtiffjs - Work in progress
 
 Reading tiff using libtiff, compiled to webassembly. <br />
