@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/aviklai/libtiffjs.svg?branch=master)](https://travis-ci.org/aviklai/libtiffjs)
 [![npm version](https://img.shields.io/npm/v/libtiffjs.svg)](https://www.npmjs.com/package/libtiffjs)
 
 # libtiffjs - Work in progress
