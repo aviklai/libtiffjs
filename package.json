@@ -18,7 +18,8 @@
     "prepublishOnly": "npm run build",
     "test": "karma start --single-run --browser ChromeHeadless karma.conf.js",
     "test:watch": "karma start --auto-watch --browser ChromeHeadless karma.conf.js",
-    "test:ci": "webpack --env dev && webpack --env build && karma start --single-run --browser ChromeHeadless karma.conf.js"
+    "test:ci": "webpack --env dev && webpack --env build && karma start --single-run --browser ChromeHeadless karma.conf.js",
+    "cover": "npm run test && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "libtiff",
