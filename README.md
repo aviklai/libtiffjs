@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/aviklai/libtiffjs.svg?branch=master)](https://travis-ci.org/libtiffjs) 
+[![Build Status](https://travis-ci.org/aviklai/libtiffjs.svg?branch=master)](https://travis-ci.org/aviklai/libtiffjs) 
 [![Coverage Status](https://coveralls.io/repos/github/aviklai/libtiffjs/badge.svg?branch=master)](https://coveralls.io/github/aviklai/libtiffjs?branch=master) 
 [![npm version](https://img.shields.io/npm/v/libtiffjs.svg)](https://www.npmjs.com/package/libtiffjs)
 
