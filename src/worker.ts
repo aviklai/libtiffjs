@@ -3,6 +3,7 @@ import { TiffTag } from "./tiffConsts";
 import { uuidv4 } from "./utils";
 import open from './wrappers/open';
 import readTiffFloat32 from './wrappers/readTiffFloat32';
+import readRGBAImage from './wrappers/readRGBAImage';
 import privateRegistry from './privateRegistry';
 
 let initialized = false;
@@ -23,6 +24,7 @@ self.Module = {
         privateRegistry.TIFFReadDirectory = self.Module.cwrap('ReadDirectory', 'number', ['number']);
         privateRegistry.TIFFSetDirectory = self.Module.cwrap('SetDirectory', 'number', ['number', 'number']);
         privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
+        privateRegistry.TIFFReadRGBAImageOriented = self.Module.cwrap('TIFFReadRGBAImageOriented', 'number', ['number', 'number', 'number', 'number', 'number', 'number']);
         registry.open = open(
             self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']),
             openedFiles
@@ -34,6 +36,7 @@ self.Module = {
         registry.width = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGEWIDTH));
         registry.height = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGELENGTH));
         registry.readTiffFloat32 = readTiffFloat32();
+        registry.readRGBAImage = readRGBAImage();
         initialized = true;
         postMessage({ready: true});
     }

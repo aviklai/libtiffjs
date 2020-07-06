@@ -1,6 +1,6 @@
 {
   "name": "libtiffjs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "BSD",
   "main": "lib/index.js",
   "files": [
@@ -25,7 +25,9 @@
     "tiff",
     "tif",
     "libtiffjs",
-    "libtiff.js"
+    "libtiff.js",
+    "wasm",
+    "webassembly"
   ],
   "repository": {
     "type": "git",

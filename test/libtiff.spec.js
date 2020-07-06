@@ -1,4 +1,5 @@
 const tinyFloatTifPath = '/base/test/assets/tiny-float.tif';
+const tiff8bit1channel = 'base/test/assets/palette-1c-8b.tif'
 
 function xhrAsPromiseArrayBuffer(url) {
     let xhr = new XMLHttpRequest();
@@ -56,4 +57,13 @@ describe('Given that libtiffjs exists', () => {
                 .then((data) => expect(data).to.be.a('float32array'));
         });
     });
+
+    describe('calling readRGBAImage', function () {
+        it('should return a rgba image', () => {
+            return xhrAsPromiseArrayBuffer(tiff8bit1channel)
+                .then((tifBlob) => libtiffjs.open(tifBlob))
+                .then((tiffInstance) => tiffInstance.readRGBAImage())
+                .then((data) => expect(data).to.be.a('uint8Array'));
+        });
+    });    
 });

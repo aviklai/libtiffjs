@@ -44,4 +44,8 @@ export default class TiffInstance {
     readTiffFloat32() {
         return callWorker('readTiffFloat32', [this.tiffPtr]);
     }
+
+    readRGBAImage() {
+        return callWorker('readRGBAImage', [this.tiffPtr]);
+    }
 }
