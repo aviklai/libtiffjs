@@ -34,11 +34,11 @@
     "url": "git+https://github.com/aviklai/libtiffjs.git"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.3",
-    "@babel/core": "7.8.3",
-    "@babel/plugin-proposal-class-properties": "7.8.3",
-    "@babel/preset-env": "7.8.3",
-    "@babel/preset-typescript": "7.8.3",
+    "@babel/cli": "7.10.1",
+    "@babel/core": "7.10.1",
+    "@babel/plugin-proposal-class-properties": "7.10.1",
+    "@babel/preset-env": "7.10.1",
+    "@babel/preset-typescript": "7.10.1",
     "@types/node": "14.0.14",
     "babel-loader": "8.1.0",
     "chai": "4.1.2",
