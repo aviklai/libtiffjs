@@ -1,6 +1,6 @@
 {
   "name": "libtiffjs",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "license": "BSD",
   "main": "lib/index.js",
   "files": [

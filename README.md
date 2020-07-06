@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/aviklai/libtiffjs/badge.svg?branch=master)](https://coveralls.io/github/aviklai/libtiffjs?branch=master) 
 [![npm version](https://img.shields.io/npm/v/libtiffjs.svg)](https://www.npmjs.com/package/libtiffjs)
 
-# libtiffjs - Work in progress
+# libtiffjs
 
 Reading tiff using libtiff, compiled to webassembly. <br />
 Inspired by loam (Worker and wasm communication architecture) - https://github.com/azavea/loam <br />
