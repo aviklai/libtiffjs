@@ -28,3 +28,9 @@ require('libtiffjs/tiff.raw.js');
 require('libtiffjs/tiff.raw.wasm');
 libtiffjs.initialize();
 ```
+
+## Demo
+https://libtiffjs.netlify.app <br />
+<br />
+The demo code is available here: <br />
+https://github.com/aviklai/libtiffjs-example
