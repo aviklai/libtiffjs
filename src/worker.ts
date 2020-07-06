@@ -1,14 +1,13 @@
 // @ts-nocheck
 import { TiffTag } from "./tiffConsts";
-import { uuidv4 } from "./utils";
 import open from './wrappers/open';
+import close from './wrappers/close';
 import readTiffFloat32 from './wrappers/readTiffFloat32';
 import readRGBAImage from './wrappers/readRGBAImage';
 import privateRegistry from './privateRegistry';
 
 let initialized = false;
 let registry: any = {};
-var openedFiles = [];
 
 self.Module = {
     onRuntimeInitialized: function() {
@@ -25,14 +24,8 @@ self.Module = {
         privateRegistry.TIFFSetDirectory = self.Module.cwrap('SetDirectory', 'number', ['number', 'number']);
         privateRegistry.TIFFGetStringField = self.Module.cwrap('GetStringField', 'string', ['number', 'number']);
         privateRegistry.TIFFReadRGBAImageOriented = self.Module.cwrap('TIFFReadRGBAImageOriented', 'number', ['number', 'number', 'number', 'number', 'number', 'number']);
-        registry.open = open(
-            self.Module.cwrap('TIFFOpen', 'number', ['string', 'string']),
-            openedFiles
-        );  
-        registry.close = (tiffPtr: number, filePath: string) => {
-            privateRegistry.TIFFClose(tiffPtr)
-            FS.unlink(filePath);
-        };              
+        registry.open = open();
+        registry.close = close();              
         registry.width = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGEWIDTH));
         registry.height = (tiffPtr: number) => (privateRegistry.TIFFGetField(tiffPtr, TiffTag.IMAGELENGTH));
         registry.readTiffFloat32 = readTiffFloat32();

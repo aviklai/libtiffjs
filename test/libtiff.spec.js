@@ -28,6 +28,7 @@ describe('Given that libtiffjs exists', () => {
             return xhrAsPromiseArrayBuffer(tinyFloatTifPath)
                 .then((tifBlob) => libtiffjs.open(tifBlob))
                 .then((tiffInstance) => tiffInstance.close())
+                .then((result) => expect(result).to.be.a('undefined'))
         });
     });
 
@@ -65,15 +66,5 @@ describe('Given that libtiffjs exists', () => {
                 .then((tiffInstance) => tiffInstance.readRGBAImage())
                 .then((data) => expect(data).to.be.a('uint8Array'));
         });
-    });    
-
-    describe('calling close', function () {
-        it('should close the tif file', () => {
-            return xhrAsPromiseArrayBuffer(tiff8bit1channel)
-                .then((tifBlob) => libtiffjs.open(tifBlob))
-                .then((tiffInstance) => tiffInstance.close())
-                .then((result) => expect(result).to.be.a('undefined'))
-        });
-    });  
-    
+    });   
 });

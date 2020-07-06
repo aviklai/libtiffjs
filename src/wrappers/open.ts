@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { uuidv4 } from "../utils";
+import privateRegistry from '../privateRegistry';
 
-export default function open(TIFFOpen) {
+export default function open() {
     return function (data) {
         const directory = '/';
         const filename = `${uuidv4()}.tiff`;
@@ -13,7 +14,7 @@ export default function open(TIFFOpen) {
             FS.createDataFile("/", filename, new Uint8Array(data), true, false);
         }
         const filePath = `/${filename}`;
-        let tiffPtr = TIFFOpen(filePath, 'r');
+        let tiffPtr = privateRegistry.TIFFOpen(filePath, 'r');
         return {tiffPtr, filePath, directory, filename};
     };
 }
