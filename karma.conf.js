@@ -2,7 +2,7 @@ module.exports = function (config) {
     config.set({
         frameworks: ['mocha', 'chai'],
         preprocessors: {
-            'test/**/*.spec.js': ['babel']
+            'test/**/*.spec.js': ['babel', 'coverage']
         },
         babelPreprocessor: {
             filename: function (file) {
@@ -45,11 +45,16 @@ module.exports = function (config) {
         },   
         // WebAssembly takes a while to parse
         browserDisconnectTimeout: 4000,
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
         port: 9876, // karma web server port
         colors: true,
         logLevel: config.LOG_INFO,
         browsers: ['ChromeHeadless'],
-        concurrency: Infinity
+        concurrency: Infinity,
+        coverageReporter: {
+            type : 'lcovonly',
+            dir : 'coverage/',
+            subdir: '.'
+        }
     });
 };
