@@ -1,9 +1,6 @@
-import privateRegistry from '../privateRegistry';
-
-export default function close() {
-    return function(tiffPtr, filePath) {
-        privateRegistry.TIFFClose(tiffPtr)
-        // @ts-ignore
-        FS.unlink(filePath);  
-    }    
+export default function close(privateRegistry: any) {
+  return function (tiffPtr: number, filePath: string): void {
+    privateRegistry.TIFFClose(tiffPtr);
+    FS.unlink(filePath);
+  };
 }
