@@ -19,6 +19,6 @@ export default function readRGBAImage(privateRegistry) {
     // @ts-ignore
     const image = HEAPU8.subarray(raster, raster + width * height * 4);
     privateRegistry.TIFFFree(raster);
-    return image;
+    return image.slice(0);
   };
 }
